@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Чат</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<link href="messegess.css" rel="stylesheet">
+<script src='jquery-3.6.0.min.js'></script>
+</head>
+<body>
+
+<div id = "content" class="container-fluid">
+    <div id = "header" class="container-fluid">    
+    </div>
+    <div id = "chatMessage" class="container justify-content-center" >
+        <div id = "chat" class="row">
+            
+        </div>
+        <div id = "sendMessages" class="row">
+            <form id = 'form'>
+                <input type="text" id = "messegs" name = 'mes' class="col-sm-9" required>
+                <input type="submit" id = "buttonSend" name = "button" class="col-sm-3">
+            </form>
+        </div>
+    </div>
+       
+</div>
+</body>
+</html>
+
+<script>
+
+    var params = window
+    .location
+    .search
+    .replace('?','')
+    .split('&')
+    .reduce(
+        function(p,e){
+            var a = e.split('=');
+            p[ decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
+            return p;
+        },
+        {}
+    );
+    let id_chat = params['id_chat'];
+    
+    function getMessages(){
+    $.ajax({
+            url: '/messages.php?id_chat=' + id_chat,
+            method: 'post',
+            dataType: 'json',
+            data: {id_chat:id_chat},
+            processData: false,
+            contentType: false,
+            success: function(result){
+                //alert(result.login_in);
+                //  console.log(result.login);
+                //  console.log(result.login_in);
+                $('#headerlogin').remove();
+                var header = $("<h3 id = 'headerlogin'> Ваш чат с: @" + result.login_in + "</h3>");      
+                $('#header').append(header); 
+
+
+                if(result.messages != null){
+                    for(var v in  result.messages['user_in']){
+                    
+                        if( result.messages['user_in'][v] != result.login){
+                            var newElems = $("<div class='col-sm-12 align-self-end mes'></div>")
+                            .append("<p class = 'log' style= 'float: right;'>@" + result.login + "</p><br><p class = 'mess' style= 'float: right;'>" +  result.messages['text'][v] + "</p>");        
+                            
+                            $('#chat').append(newElems); 
+
+                            var block = document.getElementById("chat");
+                            block.scrollTop = block.scrollHeight;
+                        } else {
+                            var newElems = $("<div class='col-sm-12 align-self-end mes'></div>")
+                            .append("<p class = 'log' style= 'float: left;'>@" + result.login_in + "</p><br><p class = 'mess' style= 'float: left;'>" +  result.messages['text'][v] + "</p>");        
+                            
+                            $('#chat').append(newElems); 
+
+                            var block = document.getElementById("chat");
+                            block.scrollTop = block.scrollHeight;
+                        } 
+                    
+                    
+                    }
+                } else {
+                    var newElems = $("<div class='col-sm-12 align-self-end mes'></div>")
+                    .append("<p'> У вас пока нет сообщений</p>");        
+                    
+                    $('#chat').append(newElems); 
+                }
+
+                
+
+            },
+        });
+        
+
+    }
+    getMessages();
+
+    $(document).ready(function() {
+        $("#form").submit(function(event) {
+            event.preventDefault();
+            
+        $.ajax({
+            url: '/sendMessages.php?id_chat=' + id_chat,
+            method: 'post',
+            dataType: 'html',
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            success: function(result){
+                console.log(result);
+                $('.mes').remove();
+                jQuery('#messegs').val('');
+                getMessages();
+
+            },
+        });
+
+    });
+});
+function updateMessages() {
+    $('.mes').remove();
+    getMessages();
+}
+   
+</script>
+<script>
+//setInterval(updateMessages(), 5000);
+//let i = 0;
+
+setInterval(function() {
+	updateMessages();
+}, 15000);
+</script>

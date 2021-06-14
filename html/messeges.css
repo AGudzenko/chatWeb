@@ -1,0 +1,26 @@
+#content {
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+}
+#header {
+    height: 100px;
+    background-color: rgb(172, 194, 255);
+}
+#chatMessage {
+    height: 550px;
+    width: 70%;
+    background-color: rgb(255, 255, 255);
+}
+#chat {
+    height: 545px;
+    background-color: rgb(252, 252, 252);
+    overflow: auto;
+}
+.mes {
+    margin-bottom: 0;
+    margin: 10px;
+    background-color: rgb(91, 162, 224);
+}
+.log {
+    color: rgb(85, 124, 207);
+}

@@ -1,0 +1,22 @@
+#login {
+    width: 80%;
+    display: inline;
+    height: 33px;
+}
+.chats_class {
+	height: 75px;
+}
+h3 {
+	margin-left: 10%;
+}
+.chats_class {
+    background-color: rgb(206, 237, 250);
+    height: 40px;
+    margin: 10px;
+}
+.chats_class:hover {
+    background-color: rgb(178, 228, 250);
+}
+a {
+    margin-left: 10%;
+}

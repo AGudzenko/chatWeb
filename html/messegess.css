@@ -1,0 +1,36 @@
+#content {
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+}
+#header {
+    height: 100px;
+    background-color: rgb(172, 194, 255);
+}
+#chatMessage {
+    height: 550px;
+    width: 75%;
+    background-color: rgb(255, 255, 255);
+}
+#chat {
+    height: 545px;
+    background-color: rgb(252, 252, 252);
+    overflow: auto;
+}
+.mes {
+    margin-bottom: 0;
+    margin: 10px;
+    background-color: rgb(215, 235, 253);
+    border-radius: 4px;
+    width: 97%;
+}
+.log {
+    color: rgb(85, 124, 207);
+}
+#messegs {
+    width: 80%;
+    display: inline;
+}
+h3 {
+    margin-left: 13%;
+    color: rgb(55, 55, 104);
+}
